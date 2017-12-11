@@ -2,13 +2,16 @@ package com.example.android.quakereport;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 public class WebActivity extends AppCompatActivity {
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +19,12 @@ public class WebActivity extends AppCompatActivity {
         setContentView(R.layout.activity_web);
         Bundle extras = getIntent().getExtras();
         String url, title;
+        progressBar = (ProgressBar)findViewById(R.id.progress);
 
+        progressBar.setProgress(0);
+
+        progressBar.setVisibility(View.VISIBLE);
+       
 
         title = extras.getString("place");
         setTitle(title);
@@ -24,6 +32,7 @@ public class WebActivity extends AppCompatActivity {
         url = extras.getString("url");
 
         WebView webView = (WebView) findViewById(R.id.WebView);
+        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
         WebSettings wv_settings = webView.getSettings();
 
 
@@ -39,7 +48,9 @@ public class WebActivity extends AppCompatActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                setTitle(view.getTitle());
+                progressBar.setVisibility(View.GONE);
+
+                //  setTitle(view.getTitle());
                 //do your stuff ...
             }
             @Override
@@ -51,6 +62,7 @@ public class WebActivity extends AppCompatActivity {
                 }
                 return true;
             }
+
         });
 
 //wv.setWebViewClient(new HelpClient(this));//
