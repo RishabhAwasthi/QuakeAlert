@@ -15,6 +15,7 @@
  */
 package com.example.android.quakereport;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -57,6 +58,8 @@ public class EarthquakeActivity extends AppCompatActivity {
         // so the list can be populated in the user interface
         earthquakeListView.setAdapter(mAdapter);
 
+
+
         earthquakeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -64,9 +67,25 @@ public class EarthquakeActivity extends AppCompatActivity {
                 // Find the current earthquake that was clicked on
 
                 Earthquake currentEarthquake = mAdapter.getItem(position);
+                String root = currentEarthquake.getMlocation();
+                if(root.contains("of"))
+                {String[] sub = root.split("of");
+                    String ploc= sub[0] + "of";
+                    String loc =sub[1];
+
+                }
+                else
+                {String ploc ="Near ";
+
+                }
 
                 // Convert the String URL into a URI object (to pass into the Intent constructor)
                 Uri earthquakeUri = Uri.parse(currentEarthquake.getUrl());
+                String url=earthquakeUri.toString();
+                Intent intent = new Intent(EarthquakeActivity.this,WebActivity.class);
+                intent.putExtra("url",url);
+                intent.putExtra("place",root);
+                startActivity(intent);
 
 
 

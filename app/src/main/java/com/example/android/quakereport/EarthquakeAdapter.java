@@ -1,7 +1,6 @@
 package com.example.android.quakereport;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -9,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
@@ -48,7 +46,7 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         TextView subloc = (TextView) listItemView.findViewById(R.id.offset);
 
 
-        final String root = currentquake.getMlocation();
+         String root = currentquake.getMlocation();
         if(root.contains("of"))
         {String[] sub = root.split("of");
             String ploc= sub[0] + "of";
@@ -77,24 +75,7 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
 
         time.setText(currentquake.getTime());
 
-
-
-        LinearLayout click = (LinearLayout) listItemView.findViewById(R.id.click);
-        click.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String url = currentquake.getUrl();
-                Intent intent = new Intent(getContext(),WebActivity.class);
-                intent.putExtra("url",url);
-                intent.putExtra("place",root);
-                getContext().startActivity(intent);
-            }
-        });
-
-
-
-
-
+        
         return listItemView;
 
     }
